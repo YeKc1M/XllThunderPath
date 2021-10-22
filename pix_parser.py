@@ -5,16 +5,16 @@ MAX_HEIGHT = 240
 
 class PixParser:
 
-    pix = list(list(int))
-    path = list(list(int))
+    pix = list()
+    path = list()
     maxLength = 0
-    maxPath = list(list(int))
+    maxPath = list()
 
     def __init__(self, pix):
         self.pix = pix
-        self.path = list(list(int))
+        self.path = list()
         self.maxLength = 0
-        self.maxPath = list(list(int))
+        self.maxPath = list()
 
     def findRoot(self):
         for row in range(0, MAX_HEIGHT):
@@ -22,6 +22,10 @@ class PixParser:
                 if self.pix[row][col] == 1:
                     return [col, row]
         return [-1, -1]
+
+    def DFSRoot(self, rootLocation):
+        # self.path.append(rootLocation)
+        self.DFS(rootLocation[0], rootLocation[1], 0)
 
     def DFS(self, x, y, length):
         if x < 0 or x >= MAX_WIDTH:
@@ -45,34 +49,40 @@ class PixParser:
                 self.maxPath = self.path.copy()
             return
 
-        self.path.append([x - 1, y])
+        self.path.append([x, y])
         self.DFS(x - 1, y, length + 1)
-        self.path.remove([x - 1, y])
-
-        self.path.append(x + 1, y)
         self.DFS(x + 1, y, length + 1)
-        self.path.remove([x + 1, y])
-
-        self.path.append([x, y - 1])
         self.DFS(x, y - 1, length + 1)
-        self.path.remove([x, y - 1])
-
-        self.path.append([x, y + 1])
         self.DFS(x, y + 1, length + 1)
-        self.path.remove([x, y + 1])
-
-        self.path.append([x - 1, y - 1])
         self.DFS(x - 1, y - 1, length + math.sqrt(2))
-        self.path.remove([x - 1, y - 1])
-
-        self.path.append([x - 1, y + 1])
         self.DFS(x - 1, y + 1, length + math.sqrt(2))
-        self.path.remove([x - 1, y + 1])
-
-        self.path.append([x + 1, y - 1])
         self.DFS(x + 1, y - 1, length + math.sqrt(2))
-        self.path.remove([x + 1, y - 1])
-
-        self.path.append([x + 1, y + 1])
         self.DFS(x + 1, y + 1, length + math.sqrt(2))
-        self.path.remove([x + 1, y + 1])
+        self.path.remove([x, y])
+
+
+
+
+def test1():
+    pix = list()
+    for i in range(0, MAX_HEIGHT):
+        col = list()
+        for j in range(0, MAX_WIDTH):
+            col.append(0)
+        pix.append(col)
+    pix[0][1] = 1
+    pix[0][2] = 1
+    pix[0][3] = 1
+    pix[1][4] = 1
+    pix[2][3] = 1
+    pix[1][3] = 1
+    pixparser = PixParser(pix)
+    rootlocation = pixparser.findRoot()
+    print(rootlocation)
+    pixparser.DFSRoot(rootlocation)
+    print(pixparser.maxPath)
+    print(pixparser.maxLength)
+
+if __name__ == '__main__':
+    print("hello world!")
+    test1()
