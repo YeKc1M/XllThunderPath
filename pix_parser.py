@@ -1,7 +1,7 @@
 import math
 
-MAX_WIDTH = 80
-MAX_HEIGHT = 240
+MAX_WIDTH = 40
+MAX_HEIGHT = 128
 
 class PixParser:
 
@@ -19,7 +19,7 @@ class PixParser:
     def findRoot(self):
         for row in range(0, MAX_HEIGHT):
             for col in range(0, MAX_WIDTH):
-                if self.pix[row][col] == 1:
+                if self.pix[MAX_HEIGHT - row - 1][col] > 0:
                     return [col, row]
         return [-1, -1]
 
