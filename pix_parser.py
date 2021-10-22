@@ -43,7 +43,7 @@ class PixParser:
                 self.maxLength = length
                 self.maxPath = self.path.copy()
             return
-        if self.pix[y][x] == 0:
+        if self.pix[MAX_HEIGHT - 1 - y][x] == 0:
             if length > self.maxLength:
                 self.maxLength = length
                 self.maxPath = self.path.copy()

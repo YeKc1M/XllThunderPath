@@ -35,7 +35,18 @@ def test2():
     location = parser.findRoot()
     print(location)
 
+def test3():
+    tif = TifParser("./skeletonized/S_115.08us.tif")
+    parser = pix_parser.PixParser(tif.pixs)
+    location = parser.findRoot()
+    # print(location)
+    parser.DFSRoot(location)
+    print(parser.maxPath)
+    print(parser.maxLength)
+
+
 if __name__ == '__main__':
     print("hello world!")
     # test1()
-    test2()
+    # test2()
+    test3()
