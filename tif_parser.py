@@ -24,6 +24,16 @@ class TifParser:
         #     print(value)
         self.pixs = imarray.copy()
 
+    def generate(self, filepath, maxPath):
+        img = Image.new('RGB', (pix_parser.MAX_WIDTH, pix_parser.MAX_HEIGHT))
+        for i in range(0, len(self.pixs)):
+            for j in range(0, len(self.pixs[i])):
+                if self.pixs[i][j] == 255:
+                    img.putpixel((j, i), (255, 255, 255))
+        for ele in maxPath:
+            img.putpixel((ele[0], pix_parser.MAX_HEIGHT - ele[1] - 1), (255, 0, 0))
+        img.save(filepath)
+
 
 
 def test1():
@@ -44,9 +54,26 @@ def test3():
     print(parser.maxPath)
     print(parser.maxLength)
 
+def test4():
+    # tif = TifParser("./skeletonized/S_115.08us.tif")
+    img = Image.new("RGB", (pix_parser.MAX_WIDTH, pix_parser.MAX_HEIGHT))
+    for i in range(0, pix_parser.MAX_HEIGHT):
+        for j in range(0, pix_parser.MAX_WIDTH):
+            img.putpixel((j, i), (255, 255, 255))
+    img.save("temp.tif")
+
+
+def test5():
+    tif = TifParser("./skeletonized/S_115.08us.tif")
+    pix = pix_parser.PixParser(tif.pixs)
+    root = pix.findRoot()
+    pix.DFSRoot(root)
+    tif.generate("./temp.tif", pix.maxPath)
 
 if __name__ == '__main__':
     print("hello world!")
     # test1()
     # test2()
-    test3()
+    # test3()
+    # test4()
+    test5()
